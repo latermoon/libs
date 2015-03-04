@@ -11,6 +11,11 @@ import (
 )
 
 //
+// session.Write(cmd.Bytes())
+// session.Write(reply.Bytes())
+// cmd, err := codec.Read(session, &cmd)
+// reply, err := codec.Read(session, &reply)
+// rdb, err := codec.ReadRDB(sessoin, rdbHandler)
 type Session struct {
 	net.Conn
 	rw    *bufio.Reader
@@ -23,20 +28,6 @@ func NewSession(conn net.Conn) *Session {
 		Conn: conn,
 		rw:   bufio.NewReader(conn),
 	}
-}
-
-func (s *Session) WriteCommand(cmd Command) error {
-	s.wlock.Lock()
-	defer s.wlock.Unlock()
-	_, err := s.Write(cmd.Bytes())
-	return err
-}
-
-func (s *Session) WriteReply(reply Reply) error {
-	s.wlock.Lock()
-	defer s.wlock.Unlock()
-	_, err := s.Write(reply.Bytes())
-	return err
 }
 
 func (s *Session) ReadCommand() (Command, error) {
