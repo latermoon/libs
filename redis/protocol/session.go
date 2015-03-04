@@ -149,6 +149,30 @@ func (s *Session) ReadReply() (Reply, error) {
 	}
 }
 
+func (s *Session) ReadRDB(w io.Writer) (err error) {
+	// Read ( $<number of bytes of RDB> CR LF )
+	if err = s.skipByte('$'); err != nil {
+		return
+	}
+
+	var rdbSize int64
+	if rdbSize, err = s.readInt64(); err != nil {
+		return
+	}
+
+	var c byte
+	for i := int64(0); i < rdbSize; i++ {
+		c, err = s.rw.ReadByte()
+		if err != nil {
+			return
+		}
+		if w != nil {
+			w.Write([]byte{c})
+		}
+	}
+	return
+}
+
 func (s *Session) Close() error {
 	return nil
 }
