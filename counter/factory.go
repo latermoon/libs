@@ -36,7 +36,3 @@ func (f *Factory) Get(name string) (c *Counter) {
 	}
 	return c
 }
-
-func (f *Factory) Len() int {
-	return len(f.table)
-}
