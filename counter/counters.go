@@ -6,13 +6,13 @@ import (
 
 // Counter Factory & Container
 type Counters struct {
-	table map[string]Counter
+	table map[string]*Counter
 	mu    sync.Mutex
 }
 
 func NewCounters() (c *Counters) {
 	c = &Counters{
-		table: make(map[string]Counter),
+		table: make(map[string]*Counter),
 	}
 	return
 }
@@ -22,7 +22,7 @@ func (c *Counters) Len() int {
 }
 
 // 获取并自动创建
-func (c *Counters) Get(name string) (counter Counter) {
+func (c *Counters) Get(name string) (counter *Counter) {
 	var ok bool
 	counter, ok = c.table[name]
 	if !ok {
