@@ -8,7 +8,8 @@ import (
 
 func main() {
 	c := counter.Counter(0)
-	c.SetCount(10)
+	c = 100
+	// c.SetCount(100)
 	fmt.Println("count:", c.Incr(1), c.Decr(2))
 
 	factory := counter.NewFactory()
