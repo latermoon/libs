@@ -6,30 +6,26 @@ import (
 )
 
 // Just Counter, Simple Enough, Easy to Incr/Decr
-type Counter struct {
-	v int64
-}
-
-func New(val int64) *Counter {
-	return &Counter{
-		v: val,
-	}
-}
+// c := Counter(0)
+// c.SetCount(100)
+// c.Incr(1) or c.Decr(1)
+// fmt.Println(c) or c.Count()
+type Counter int64
 
 func (c *Counter) SetCount(val int64) {
-	atomic.StoreInt64(&c.v, val)
+	atomic.StoreInt64((*int64)(c), val)
 }
 
 func (c *Counter) Count() int64 {
-	return atomic.LoadInt64(&c.v)
+	return atomic.LoadInt64((*int64)(c))
 }
 
 func (c *Counter) Incr(delta int64) int64 {
-	return atomic.AddInt64(&c.v, delta)
+	return atomic.AddInt64((*int64)(c), delta)
 }
 
 func (c *Counter) Decr(delta int64) int64 {
-	return atomic.AddInt64(&c.v, delta*-1)
+	return atomic.AddInt64((*int64)(c), delta*-1)
 }
 
 func (c *Counter) String() string {
