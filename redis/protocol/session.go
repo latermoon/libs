@@ -167,7 +167,6 @@ func (s *Session) ReadByte() (c byte, err error) {
 	return s.rw.ReadByte()
 }
 
-// 获取字节而不移动游标
 func (s *Session) PeekByte() (c byte, err error) {
 	if b, e := s.rw.Peek(1); e == nil {
 		c = b[0]
@@ -199,7 +198,6 @@ func (s *Session) skipBytes(bs []byte) (err error) {
 	return
 }
 
-// 读取一行
 func (s *Session) readLine() (line []byte, err error) {
 	line, err = s.rw.ReadSlice(LF)
 	if err == bufio.ErrBufferFull {
@@ -215,7 +213,6 @@ func (s *Session) readLine() (line []byte, err error) {
 	return line[:i], nil
 }
 
-// 读取字符串，遇到CRLF换行为止
 func (s *Session) readString() (str string, err error) {
 	var line []byte
 	if line, err = s.readLine(); err != nil {
