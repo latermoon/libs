@@ -3,6 +3,7 @@ package slaveof
 import (
 	. "../protocol"
 	"net"
+	"os"
 )
 
 type SlaveOfHandler interface {

@@ -2,6 +2,7 @@ package main
 
 import (
 	. "../redis/protocol"
+	"../redis/slaveof"
 	"log"
 	"net"
 	"strings"
@@ -13,7 +14,22 @@ func main() {
 	cmd := NewCommand([]byte("SYNC"))
 	log.Println(strings.Replace(string(cmd.Bytes()), CRLF, " ", -1), cmd.Bytes())
 
-	testLocal()
+	tectSlaveOf()
+}
+
+func tectSlaveOf() {
+	client := slaveof.New(":6379", &handler{})
+	if err := client.Connect(); err != nil {
+		log.Panicln(err)
+	}
+}
+
+type handler struct {
+	slaveof.SlaveOfHandler
+}
+
+func (h *handler) OnCommand(cmd Command) {
+	log.Println(cmd)
 }
 
 func testLocal() {
