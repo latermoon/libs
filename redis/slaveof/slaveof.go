@@ -1,7 +1,7 @@
 package slaveof
 
 import (
-	. "../protocol"
+	. "github.com/latermoon/libs/redis/protocol"
 	"net"
 	"os"
 )
