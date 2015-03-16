@@ -1,9 +1,8 @@
 package slaveof
 
 import (
-	. "github.com/latermoon/libs/redis/protocol"
+	. "libs/redis/protocol"
 	"net"
-	"os"
 )
 
 type SlaveOfHandler interface {
