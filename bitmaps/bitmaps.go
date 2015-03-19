@@ -15,12 +15,12 @@ func New(size int) Bitmaps {
 	return make(Bitmaps, count)
 }
 
-// Size may larger than initialize size
+// Size return the size of bitmaps, and the size may larger than initialize size
 func (b Bitmaps) Size() int {
 	return len(b) * mask
 }
 
-// SetBit true = 1, false = 0
+// SetBit set the bit at offset, true means 1, false means 0
 func (b Bitmaps) SetBit(offset int, value bool) {
 	if value {
 		b[(offset / mask)] |= 1 << uint8(offset%mask)
@@ -29,7 +29,7 @@ func (b Bitmaps) SetBit(offset int, value bool) {
 	}
 }
 
-// GetBit true = 1, false = 0
+// GetBit return the bit value at offset, true means 1, false means 0
 func (b Bitmaps) GetBit(offset int) bool {
 	return b[(offset/mask)]&(1<<uint8(offset%mask)) > 0
 }
